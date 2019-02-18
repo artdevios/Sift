@@ -13,24 +13,44 @@ import AWSMobileClient
 
 class LoginPresenter {
 
+    enum SignType: UInt32 {
+        case login
+        case register
+    }
+    
     weak private var view: LoginViewProtocol!
     var interactor: LoginInteractorInputProtocol!
     private let router: LoginWireframeProtocol
+    private let securityPassword = "Y&T@GV#bgy%T421d&23r5da*sHB"
 
+    private var phoneNumber: String = ""
+    
     init(interface: LoginViewProtocol, interactor: LoginInteractorInputProtocol?, router: LoginWireframeProtocol) {
         self.view = interface
         self.interactor = interactor
         self.router = router
     }
     
-    // MARK: - Amazon
-    // test3
-    // QQqq11!!
     func login(username: String, password: String) {
-        AWSMobileClient.sharedInstance().signIn(username: username, password: password) { (signInResult, error) in
+        AWSMobileClient.sharedInstance().signIn(username: username, password: password) { [weak self] (signInResult, error) in
             if let error = error  {
-                DispatchQueue.main.async {
-                    self.router.showAlert(title: "Error", msg: error.localizedDescription)
+                if let error = error as? AWSMobileClientError {
+                    switch error {
+                    case .userNotFound(_):
+                        self?.register(phone: username)
+                    case .userNotConfirmed(_):
+                        DispatchQueue.main.async {
+                            self?.showConfirmAlert(msg: "User is not confirmed, please provide verification code", type: .register)
+                        }
+                    default:
+                        DispatchQueue.main.async { [weak self] in
+                            self?.router.showAlert(title: "Error", msg: error.localizedDescription)
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.router.showAlert(title: "Error", msg: error.localizedDescription)
+                    }
                 }
             } else if let signInResult = signInResult {
                 switch (signInResult.signInState) {
@@ -40,8 +60,8 @@ class LoginPresenter {
                     }
                     print("User is signed in.")
                 case .smsMFA:
-                    DispatchQueue.main.async {
-                        self.router.showAlert(title: nil, msg: "SMS message sent to \(signInResult.codeDetails!.destination!)")
+                    DispatchQueue.main.async { [weak self] in
+                        self?.showConfirmAlert(msg: "Please confirm login, SMS message sent to \(signInResult.codeDetails!.destination!)", type: .login)
                     }
                 default:
                     print("Sign In needs info which is not et supported.")
@@ -51,11 +71,43 @@ class LoginPresenter {
     }
     
     func login(phone: String) {
-//        AWSMobileClient.sharedInstance()
+        phoneNumber = phone
+        login(username: phoneNumber, password: securityPassword)
+    }
+    
+    func register(phone: String) {
+        AWSMobileClient.sharedInstance().signUp(username: phone, password: securityPassword) { (signUpResult, error) in
+            if let signUpResult = signUpResult {
+                switch(signUpResult.signUpConfirmationState) {
+                case .confirmed:
+                    DispatchQueue.main.async {
+                        TestViewController.presentBaseTestViewController()
+                    }
+                case .unconfirmed:
+                    DispatchQueue.main.async {
+                        self.showConfirmAlert(msg: "User is not confirmed and needs verification via \(signUpResult.codeDeliveryDetails!.deliveryMedium) sent at \(signUpResult.codeDeliveryDetails!.destination!)", type: .register)
+                    }
+                case .unknown:
+                    print("Unexpected case")
+                }
+            } else if let error = error {
+                if let error = error as? AWSMobileClientError {
+                    switch(error) {
+                    case .usernameExists(let message):
+                        print(message)
+                    default:
+                        break
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.router.showAlert(title: "Error", msg: error.localizedDescription)
+                }
+            }
+        }
+        
     }
     
     private func confirmLogin(code: String) {
-        
         AWSMobileClient.sharedInstance().confirmSignIn(challengeResponse: code) { (signInResult, error) in
             if let error = error  {
                 DispatchQueue.main.async {
@@ -68,6 +120,8 @@ class LoginPresenter {
                         TestViewController.presentBaseTestViewController()
                     }
                     print("User is signed in.")
+                case .smsMFA:
+                    self.showConfirmAlert(msg: "User is not confirmed and needs verification via \(signInResult.codeDetails!.deliveryMedium) sent at \(signInResult.codeDetails!.destination!)", type: .register)
                 default:
                     print("\(signInResult.signInState.rawValue)")
                 }
@@ -75,7 +129,31 @@ class LoginPresenter {
         }
     }
     
-    private func showConfirmAlert(msg: String) {
+    private func confirmSignUp(code: String) {
+        
+        AWSMobileClient.sharedInstance().confirmSignUp(username: phoneNumber, confirmationCode: code) { (signUpResult, error) in
+            if let signUpResult = signUpResult {
+                switch(signUpResult.signUpConfirmationState) {
+                case .confirmed:
+                    DispatchQueue.main.async {
+                        TestViewController.presentBaseTestViewController()
+                    }
+                case .unconfirmed:
+                    DispatchQueue.main.async {
+                        self.showConfirmAlert(msg: "User is not confirmed and needs verification via \(signUpResult.codeDeliveryDetails!.deliveryMedium) sent at \(signUpResult.codeDeliveryDetails!.destination!)", type: .register)
+                    }
+                case .unknown:
+                    print("Unexpected case")
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    self.router.showAlert(title: "Error", msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func showConfirmAlert(msg: String, type: SignType) {
         let alert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Code"
@@ -84,7 +162,13 @@ class LoginPresenter {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
             guard let codeTextField = alert.textFields?.first else { return }
-            self.confirmLogin(code: codeTextField.text ?? "")
+            switch type {
+            case .login:
+                self.confirmLogin(code: codeTextField.text ?? "")
+            case .register:
+                self.confirmSignUp(code: codeTextField.text ?? "")
+            }
+            
         }))
         (self.view as! UIViewController).present(alert, animated: true, completion: nil)
     }

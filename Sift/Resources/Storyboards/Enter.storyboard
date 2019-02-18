@@ -143,7 +143,7 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-w6-GaE" customClass="txtFeildRoundRectWithShadow" customModule="Sift" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+1" placeholder="Phone number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-w6-GaE" customClass="txtFeildRoundRectWithShadow" customModule="Sift" customModuleProvider="target">
                                 <rect key="frame" x="20" y="484" width="335" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="Dfd-qX-39G"/>
