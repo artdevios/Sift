@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "siftApiName",
+    "schemaGraphql": "s3://ift-20190130165828-deployment/amplify-appsync-files/schema.graphql.1548849825393",
+    "ResolverBucket": "ift-20190130165828-deployment",
+    "ResolverRootKey": "amplify-appsync-files",
+    "DeploymentTimestamp": "1548849825393"
+}

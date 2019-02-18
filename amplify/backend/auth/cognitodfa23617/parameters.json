@@ -1,0 +1,69 @@
+{
+    "identityPoolName": "cognitodfa23617_identitypool_dfa23617",
+    "allowUnauthenticatedIdentities": true,
+    "thirdPartyAuth": true,
+    "lambdaLogPolicy": "cognitodfa23617_lambda_log_policy",
+    "openIdLambdaRoleName": "cognitodfa23617_openid_lambda_role",
+    "openIdRolePolicy": "cognitodfa23617_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "cognitodfa23617_openid_lambda_iam_policy",
+    "openIdLogPolicy": "cognitodfa23617_openid_lambda_log_policy",
+    "userPoolName": "cognitodfa23617_userpool_dfa23617",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "cognitodfa23617_sns-role",
+    "roleExternalId": "cognitodfa23617_role_external_id",
+    "policyName": "cognitodfa23617-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase",
+        "Requires Numbers",
+        "Requires Symbols"
+    ],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "cognitodfa23617_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "cognitodfa23617_totp_lambda_role",
+    "mfaLambdaLogPolicy": "cognitodfa23617_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "cognitodfa23617_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "cognitodfa23617_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "cognitodfa23617_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "cognitodfa23617_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "cognitodfa23617_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "useDefault": "manual",
+    "unAuthRoleName": "ift-20190130165828-unauthRole",
+    "authRoleName": "ift-20190130165828-authRole",
+    "unAuthRoleArn": "arn:aws:iam::923261301759:role/ift-20190130165828-unauthRole",
+    "authRoleArn": "arn:aws:iam::923261301759:role/ift-20190130165828-authRole",
+    "resourceName": "cognitodfa23617",
+    "authSelections": "identityPoolAndUserPool",
+    "authProviders": [
+        "graph.facebook.com",
+        "accounts.google.com"
+    ],
+    "facebookAppId": "968199183380509",
+    "googleClientId": "890073598916-20m5ku876kjd5uu0jadksq8a53jqvvrk.apps.googleusercontent.com",
+    "googleIos": "890073598916-6honh1j10uv9di4mi7qe0elf3f5bjisr.apps.googleusercontent.com",
+    "selectedParties": "{\"graph.facebook.com\":\"968199183380509\"}",
+    "audiences": [
+        "890073598916-20m5ku876kjd5uu0jadksq8a53jqvvrk.apps.googleusercontent.com",
+        "890073598916-6honh1j10uv9di4mi7qe0elf3f5bjisr.apps.googleusercontent.com"
+    ]
+}

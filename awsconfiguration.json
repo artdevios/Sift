@@ -1,0 +1,40 @@
+{
+    "UserAgent": "aws-amplify/cli",
+    "Version": "0.1.0",
+    "IdentityManager": {
+        "Default": {}
+    },
+    "AppSync": {
+        "Default": {
+            "ApiUrl": "https://hur5k2tt3jbz3nbomu6t4shaha.appsync-api.us-east-1.amazonaws.com/graphql",
+            "Region": "us-east-1",
+            "AuthMode": "API_KEY",
+            "ApiKey": "da2-zunazxoyfzcafomhihif5jmrxy"
+        }
+    },
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "us-east-1:9cafd631-202e-440d-b024-c1fef9315416",
+                "Region": "us-east-1"
+            }
+        }
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "us-east-1_Z1NX8vn0x",
+            "AppClientId": "51fkaaqqnijsqein8avkhlnkhc",
+            "AppClientSecret": "dp6pforf2ba09hmev38c5oh2tn665u4a4a2o3a374k2h1gbhua6",
+            "Region": "us-east-1"
+        }
+    },
+    "GoogleSignIn": {
+        "Permissions": "email,profile,openid",
+        "ClientId-WebApp": "890073598916-20m5ku876kjd5uu0jadksq8a53jqvvrk.apps.googleusercontent.com",
+        "ClientId-iOS": "890073598916-6honh1j10uv9di4mi7qe0elf3f5bjisr.apps.googleusercontent.com"
+    },
+    "FacebookSignIn": {
+        "AppId": "968199183380509",
+        "Permissions": "public_profile"
+    }
+}

@@ -1,0 +1,56 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "ift-20190130165828-authRole",
+			"UnauthRoleArn": "arn:aws:iam::923261301759:role/ift-20190130165828-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::923261301759:role/ift-20190130165828-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "ift-20190130165828-deployment",
+			"UnauthRoleName": "ift-20190130165828-unauthRole",
+			"StackName": "ift-20190130165828",
+			"StackId": "arn:aws:cloudformation:us-east-1:923261301759:stack/ift-20190130165828/5bd4a170-2486-11e9-9491-0abba1914a70"
+		}
+	},
+	"api": {
+		"siftApiName": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"securityType": "API_KEY",
+				"GraphQLAPIIdOutput": "n4aug62535ek7f4o3raoajasgi",
+				"GraphQLAPIEndpointOutput": "https://hur5k2tt3jbz3nbomu6t4shaha.appsync-api.us-east-1.amazonaws.com/graphql",
+				"GraphQLAPIKeyOutput": "da2-zunazxoyfzcafomhihif5jmrxy"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/ift-20190130165828-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apisiftApiName"
+			},
+			"lastPushTimeStamp": "2019-02-01T18:53:16.300Z",
+			"lastPushDirHash": "zEKeAua0JZ31LY6G1JgW3A3Ylss="
+		}
+	},
+	"auth": {
+		"cognitodfa23617": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/ift-20190130165828-deployment/amplify-cfn-templates/auth/cognitodfa23617-cloudformation-template.yml",
+				"logicalId": "authcognitodfa23617"
+			},
+			"lastPushTimeStamp": "2019-02-01T18:53:16.307Z",
+			"output": {
+				"AppClientSecret": "dp6pforf2ba09hmev38c5oh2tn665u4a4a2o3a374k2h1gbhua6",
+				"UserPoolId": "us-east-1_Z1NX8vn0x",
+				"AppClientIDWeb": "72iqlqjij5jhhf9aerrussq5rv",
+				"AppClientID": "51fkaaqqnijsqein8avkhlnkhc",
+				"IdentityPoolId": "us-east-1:9cafd631-202e-440d-b024-c1fef9315416",
+				"IdentityPoolName": "cognitodfa23617_identitypool_dfa23617",
+				"UserPoolName": "cognitodfa23617_userpool_dfa23617",
+				"GoogleWebClient": "890073598916-20m5ku876kjd5uu0jadksq8a53jqvvrk.apps.googleusercontent.com",
+				"FacebookWebClient": "968199183380509",
+				"GoogleIOSClient": "890073598916-6honh1j10uv9di4mi7qe0elf3f5bjisr.apps.googleusercontent.com"
+			},
+			"lastPushDirHash": "v9FrIvNKw8E2oyDjTHLx2cN3xHg="
+		}
+	}
+}
